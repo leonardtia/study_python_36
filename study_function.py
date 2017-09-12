@@ -1,8 +1,9 @@
 import math
-g = input('please input :')
 def g2kg(arg1):
     arg2 = int(arg1)/2
     return arg2
+g = input('please input :')
+print ('{}g'.format(g))
 kg = '{}kg'.format(g2kg(g))
 print (kg)
 
