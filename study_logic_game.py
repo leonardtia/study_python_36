@@ -7,17 +7,18 @@ def input_game(change):
         change = input('please change Big or Small or Xman:')
         input_game(change)
 
-def playgame(change):
+def roll_dice(numbers=3):
     list = [];
-    re = False;
-    for i in range(0,3):
-        point1 = random.randrange(1,9)
+    for i in range(0,numbers):
+        point1 = random.randrange(1, 6)
         list.append(point1)
-    count = sum(list)
-    result = None
-    if(count >0 and count <14):
+    return sum(list)
+
+def playgame(change):
+    count = roll_dice()
+    if(count >=3 and count <=10):
         result = 's'
-    elif (count <=27 and count >16):
+    elif (count <=18 and count >=11):
         result = 'b'
     else:
         result = 'x'
