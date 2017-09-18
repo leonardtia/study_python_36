@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+import random
+class FakeUser:
+    def __init__(self):
+        _path = '/Users/leonard_tia/PycharmProjects/py36/'
+        with open(_path + 'family_name.txt','r') as text:
+            self.family_name = text.read().split()
+        text.close
+        with open(_path + 'secound_name.txt','r') as text:
+            self.secound_name = text.read().split()
+        text.close
+    def getName(self,state):
+        familyname = self.family_name[random.randrange(0, self.family_name.__len__())]
+        secound1 = []
+        secound2 = []
+        for word in self.secound_name:
+            if(word.__len__() == 1):
+                secound1.append(word)
+            else:
+                secound2.append(word)
+        if(state == 1):
+            all_name = "{}{}".format(familyname,secound1[random.randrange(0,secound1.__len__())])
+        elif(state == 2):
+            all_name = "{}{}".format(familyname,secound2[random.randrange(0,secound1.__len__())])
+        else:all_name = "{}{}".format(familyname,self.secound_name[random.randrange(0,self.secound_name.__len__())])
+        return all_name
+    def getSex(self):
+        sex_list = ['男','女']
+        i = random.randrange(0,2)
+        sex = sex_list[i]
+        return sex
+
+class SnsUser(FakeUser):
+    def buildman(self,i, s):
+        men = []
+        for j in range(1,i):
+            _user = user()
+            _user.name = self.getName(s)
+            _user.sex = self.getSex()
+            men.append(_user)
+        return men
+
+class user():
+    name='';
+    sex = '';
+
+fake = SnsUser()
+men = fake.buildman(10,0)
+for man in men:
+    print ('{}:{}'.format(man.name,man.sex))
