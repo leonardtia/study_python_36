@@ -37,19 +37,19 @@ class FakeUser:
 
 class SnsUser(FakeUser):
     def buildman(self,i, s):
-        men = []
+        #men = []
         for j in range(1,i):
             _user = user()
             _user.name = self.getName(s)
             _user.sex = self.getSex()
-            men.append(_user)
-        return men
+            #men.append(_user)
+            yield _user
+        #return men
 
 class user():
     name=''
     sex = ''
 
 fake = SnsUser()
-men = fake.buildman(10,0)
-for man in men:
+for man in fake.buildman(10,0):
     print ('{}:{}'.format(man.name,man.sex))
