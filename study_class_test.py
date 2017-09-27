@@ -10,7 +10,8 @@ class FakeUser:
             self.secound_name = text.read().split()
         text.close
     def getName(self,state):
-        familyname = self.family_name[random.randrange(0, self.family_name.__len__())]
+        #familyname = self.family_name[random.randrange(0, self.family_name.__len__())]
+        familyname = random.choice(self.family_name)
         secound1 = []
         secound2 = []
         for word in self.secound_name:
@@ -19,15 +20,19 @@ class FakeUser:
             else:
                 secound2.append(word)
         if(state == 1):
-            all_name = "{}{}".format(familyname,secound1[random.randrange(0,secound1.__len__())])
+            #all_name = "{}{}".format(familyname,secound1[random.randrange(0,secound1.__len__())])
+            all_name = "{}{}".format(familyname, random.choice(secound1))
         elif(state == 2):
-            all_name = "{}{}".format(familyname,secound2[random.randrange(0,secound1.__len__())])
-        else:all_name = "{}{}".format(familyname,self.secound_name[random.randrange(0,self.secound_name.__len__())])
+            #all_name = "{}{}".format(familyname,secound2[random.randrange(0,secound2.__len__())])
+            all_name = "{}{}".format(familyname, random.choice(secound2))
+        else:#all_name = "{}{}".format(familyname,self.secound_name[random.randrange(0,self.secound_name.__len__())])
+            all_name = "{}{}".format(familyname, random.choice(secound1+secound2))
         return all_name
     def getSex(self):
-        sex_list = ['男','女']
-        i = random.randrange(0,2)
-        sex = sex_list[i]
+        sex_list = ['男', '女', '未知']
+        #i = random.randrange(0,2)
+        #sex = sex_list[i]
+        sex = random.choice(sex_list)
         return sex
 
 class SnsUser(FakeUser):
@@ -41,8 +46,8 @@ class SnsUser(FakeUser):
         return men
 
 class user():
-    name='';
-    sex = '';
+    name=''
+    sex = ''
 
 fake = SnsUser()
 men = fake.buildman(10,0)
