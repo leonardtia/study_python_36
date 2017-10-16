@@ -36,20 +36,27 @@ class FakeUser:
         return sex
 
 class SnsUser(FakeUser):
-    def buildman(self,i, s):
+    def buildman(self, i, s=1):
         #men = []
-        for j in range(1,i):
+        for j in range(1, i):
             _user = user()
             _user.name = self.getName(s)
             _user.sex = self.getSex()
             #men.append(_user)
             yield _user
-        #return men
+
+    def get_nick_name(self, i):
+        for h in range(1, i):
+            nick_name = self.getName(2)
+            yield nick_name
+
 
 class user():
     name=''
     sex = ''
 
 fake = SnsUser()
-for man in fake.buildman(10,0):
-    print ('{}:{}'.format(man.name,man.sex))
+for man in fake.buildman(10):
+    print('{}:{}'.format(man.name, man.sex))
+for nickname in fake.get_nick_name(10):
+    print('nick:{}'.format(nickname))
