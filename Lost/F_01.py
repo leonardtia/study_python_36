@@ -32,49 +32,49 @@ class build_nature(object):
         4.蛮族：智力(mp)弱，体力(hp,atn)强，法力(it)高，幸运(kar)平
         '''
         if race == 1:
-            hcode['hp'] = random.randint(60, 101)  # 生命力
-            hcode['mp'] = random.randint(70, 101)  # 法力
-            hcode['atn'] = random.randint(60, 101)  # 物理攻击力
-            hcode['it'] = random.randint(70, 111)  # 法术攻击力
-            hcode['kar'] = random.randint(60, 101)  # 幸运力
+            hcode['hp'] = random.randint(70, 91)  # 生命力
+            hcode['mp'] = random.randint(70, 91)  # 法力
+            hcode['atn'] = random.randint(70, 91)  # 物理攻击力
+            hcode['it'] = random.randint(70, 91)  # 法术攻击力
+            hcode['kar'] = random.randint(60, 81)  # 幸运力
         elif race == 2:
-            hcode['hp'] = random.randint(90, 150)  # 生命力
-            hcode['mp'] = random.randint(30, 91)  # 法力
-            hcode['atn'] = random.randint(90, 150)  # 物理攻击力
-            hcode['it'] = random.randint(60, 101)  # 法术攻击力
-            hcode['kar'] = random.randint(90, 150)  # 幸运力
+            hcode['hp'] = random.randint(80, 101)  # 生命力
+            hcode['mp'] = random.randint(50, 71)  # 法力
+            hcode['atn'] = random.randint(70, 91)  # 物理攻击力
+            hcode['it'] = random.randint(60, 81)  # 法术攻击力
+            hcode['kar'] = random.randint(80, 101)  # 幸运力
         elif race == 3:
-            hcode['hp'] = random.randint(60, 91)  # 生命力
-            hcode['mp'] = random.randint(90, 150)  # 法力
-            hcode['atn'] = random.randint(60, 101)  # 物理攻击力
-            hcode['it'] = random.randint(90, 150)  # 法术攻击力
-            hcode['kar'] = random.randint(30, 91)  # 幸运力
+            hcode['hp'] = random.randint(70, 91)  # 生命力
+            hcode['mp'] = random.randint(80, 101)  # 法力
+            hcode['atn'] = random.randint(60, 81)  # 物理攻击力
+            hcode['it'] = random.randint(80, 101)  # 法术攻击力
+            hcode['kar'] = random.randint(50, 71)  # 幸运力
         elif race == 4:
-            hcode['hp'] = random.randint(90, 150)  # 生命力
-            hcode['mp'] = random.randint(90, 150)  # 法力
-            hcode['atn'] = random.randint(90, 150)  # 物理攻击力
-            hcode['it'] = random.randint(30, 91)  # 法术攻击力
-            hcode['kar'] = random.randint(60, 101)  # 幸运力
+            hcode['hp'] = random.randint(80, 101)  # 生命力
+            hcode['mp'] = random.randint(70, 91)  # 法力
+            hcode['atn'] = random.randint(80, 101)  # 物理攻击力
+            hcode['it'] = random.randint(50, 71)  # 法术攻击力
+            hcode['kar'] = random.randint(60, 81)  # 幸运力
 
         def wok(self, work, hc):
             if work == 1:
-                hc['hp'] += 10
-                hc['atn'] += 15
-                hc['it'] -= 25
+                hc['hp'] += 15
+                hc['atn'] += 20
+                hc['it'] -= 30
             elif work == 2:
-                hc['mp'] += 10
-                hc['it'] += 15
-                hc['atn'] -= 25
+                hc['mp'] += 15
+                hc['it'] += 20
+                hc['atn'] -= 30
             elif work == 3:
-                hc['hp'] += 10
-                hc['mp'] += 10
-                hc['it'] -= 10
-                hc['atn'] -= 10
+                hc['hp'] += 20
+                hc['mp'] += 15
+                hc['it'] -= 15
+                hc['atn'] -= 15
             elif work == 4:
-                hc['atn'] += 10
-                hc['kar'] += 10
-                hc['it'] -= 10
-                hc['hp'] -= 10
+                hc['atn'] += 20
+                hc['kar'] += 15
+                hc['it'] -= 15
+                hc['hp'] -= 15
             return hc
 
         hcode1 = wok(self, work, hcode)
@@ -123,14 +123,15 @@ class buildplayer(welcome):
 
 
 def create_player(s='s'):
-    if s is 's':
+    while s is 's':
         my = buildplayer()
         pp = my.player1()
         print('你现在是{}的{},你当前的生命力为{},武力为{},法力为{},法力值为{},幸运值为{}'.format(race_code[pp[1] - 1], work_code[pp[2] - 1],
                                                                       pp[3]['hp'], pp[3]['atn'], pp[3]['it'],
-                                                                      pp[3]['mp'], pp[3]['hp']))
-    s = input('如果要重新生成，请按：s 键：')
-    create_player(s)
+                                                                      pp[3]['mp'], pp[3]['kar']))
+        s = input('如果要重新生成角色，请按：s 键：')
+        create_player(s)
 
 
-create_player()
+create_player('s')
+print('游戏正式开始！\n --------start---------')
