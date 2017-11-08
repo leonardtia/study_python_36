@@ -1,35 +1,105 @@
 '''
-Lost Beta 0.1
+Lost Beta 0.3
 作者：leonard
-时间：2017-11-06
+时间：2017-11-08
 创建角色
 初始化角色属性
 初始化地图
+主菜单
+地图指令
+主程序
+优化地图指令
+打印地图及当前位置
 '''
 import random
 
 race_code = ('雅族', '含族', '闪族', '蛮族')
 work_code = ('战士', '法师', '牧师', '盗贼')
 sex_code = ('男性', '女性', '无性')
-point_code = ('w', 's', 'a', 'd')
+point_code = {'w': '北方死沼泽', 's': '南方幽暗林', 'a': '西方梦之丘', 'd': '东方昆仑墟'}
 menu = {1: '显示状态', 2: '检查装备', 3: '进入地图', 4: '存档', 5: '退出Lost'}
 person = {}
+po = (0, 0)
 
-map_x = [i for i in range(-12, 12)]
-map_y = [j for j in range(-12, 12)]
+map_x = [i for i in range(-9, 10)]
+map_y = [j for j in range(-9, 10)]
 mmap = []
 for i in map_x:
     j = 0
     for j in map_y:
         mmap.append((i, j))
 
+
+class buildplayer():
+    def player1(self):
+        player = {}
+        name = input('请输入你的角色的名字：')
+        if name:
+            pass
+        else:
+            name = '玩家' + str(random.randint(1, 9999))
+        player['名字'] = name
+        print('你的角色的名字是：', player['名字'])
+        print('请选择你所属的种族：')
+        i = 1
+        for r in race_code:
+            print(i, '.', r)
+            i += 1
+        race = input('请从（1-4）项里选择1项')
+        if race:
+            if eval(race) in [1, 4]:
+                pass
+        else:
+            race = random.randint(1, 4)
+        player['种族'] = race
+        print('你选择的种族是：{}'.format(race_code[race - 1]))
+        print('请选择你所属的职业：')
+        i = 1
+        for w in work_code:
+            print(1, '.', w)
+            i += 1
+        work = input('请从（1-4）项里选择1项')
+        if work:
+            if eval(work) in [1, 4]:
+                pass
+        else:
+            work = random.randint(1, 4)
+        player['职业'] = work
+        print('你选择的职业是：{}'.format(work_code[work - 1]))
+        print('请选择你的性别：')
+        i = 1
+        for s in sex_code:
+            print(i, '.', s)
+            i += 1
+        sex = input('请从（1-3）项里选择1项')
+        if not sex or eval(sex) not in [1, 3]:
+            sex = random.randint(1, 3)
+        else:
+            pass
+        player['性别'] = sex
+        print('你选择的性别是：{}'.format(sex_code[sex - 1]))
+        bn = build_nature()
+        player['属性'] = bn.nature(race=race, work=work, sex=sex)
+        print('{}，欢迎你进入到Lost世界，请小心，这里处处充满着危险！'.format(player['名字']))
+        return player
+
+    def create_player(self, s='s'):
+        person1 = {}
+        while s is 's':
+            person1 = self.player1()
+            bn = build_nature()
+            bn.showuserinfo(person1)
+            s = input('如果要重新生成角色，请按：s 键：')
+            self.create_player(s)
+        return person1
+
 class welcome(object):
     def __init__(self):
         print('剑气分还合，荷珠碎复圆。万般皆是命，半点尽由天！')
         print('----------------------------------------')
         print('欢迎开始Lost迷失之旅！')
-        print('leonard Beta 0.1')
-        print('2017-11-06')
+        print('leonard Beta 0.3')
+        print('2017-11-08')
         print('----------------------------------------')
 
 
@@ -111,124 +181,100 @@ class build_nature(object):
                                                                         pp['属性']['it'], pp['属性']['mp'],
                                                                         pp['属性']['kar']))
 
-
-class buildplayer():
-    def player1(self):
-        player = {}
-        name = input('请输入你的角色的名字：')
-        if name:
-            pass
-        else:
-            name = '玩家' + str(random.randint(1, 9999))
-        player['名字'] = name
-        print('你的角色的名字是：', player['名字'])
-        print('请选择你所属的种族：')
-        i = 1
-        for r in race_code:
-            print(i, '.', r)
-            i += 1
-        race = input('请从（1-4）项里选择1项')
-        if race:
-            if eval(race) in [1, 4]:
-                pass
-        else:
-            race = random.randint(1, 4)
-        player['种族'] = race
-        print('你选择的种族是：{}'.format(race_code[race - 1]))
-        print('请选择你所属的职业：')
-        i = 1
-        for w in work_code:
-            print(1, '.', w)
-            i += 1
-        work = input('请从（1-4）项里选择1项')
-        if work:
-            if eval(work) in [1, 4]:
-                pass
-        else:
-            work = random.randint(1, 4)
-        player['职业'] = work
-        print('你选择的职业是：{}'.format(work_code[work - 1]))
-        print('请选择你的性别：')
-        i = 1
-        for s in sex_code:
-            print(i, '.', s)
-            i += 1
-        sex = input('请从（1-3）项里选择1项')
-        if not sex or eval(sex) not in [1, 3]:
-            sex = random.randint(1, 3)
-        else:
-            pass
-        player['性别'] = sex
-        print('你选择的性别是：{}'.format(sex_code[sex - 1]))
-        bn = build_nature()
-        player['属性'] = bn.nature(race=race, work=work, sex=sex)
-        print('{}，欢迎你进入到Lost世界，请小心，这里处处充满着危险！'.format(player['名字']))
-        return player
-
-    def create_player(self, s='s'):
-        person1 = {}
-        while s is 's':
-            person1 = self.player1()
-            bn = build_nature()
-            bn.showuserinfo(person1)
-            s = input('如果要重新生成角色，请按：s 键：')
-            self.create_player(s)
-        return person1
-
-
 class map(object):
     def getpoint(self, point, bushu, po):
         x = po[0]
         y = po[1]
-        if point == 'w':
-            x = x + bushu
-        if point == 's':
-            x = x - bushu
-        if point == 'a':
-            y = y - bushu
-        if point == 'd':
-            y = y + bushu
+        m = '向%s的路已经到达尽头，回头是岸'
+        m1 = m % (point_code[point])
+        if point == 's' or point == 'a':
+            bushu = -bushu
+        if point == 'w' or point == 's':
+            if (abs(y + bushu) <= max(map_y)):
+                y = y + bushu
+            else:
+                print(m1)
+        elif point == 'a' or point == 'd':
+            if (abs(x + bushu) <= max(map_y)):
+                x = x + bushu
+            else:
+                print(m1)
         po = (x, y)
         return po
 
     def intomap(self, po, point='s'):
-        while po in mmap or point != 'q':
-            point = input('请选择你要移动的方向：')
-            if not point or point not in point_code:
-                point = point_code[random.randint(0, 3)]
-            bushu = random.randint(1, 3)
-            po = self.getpoint(point, bushu, po)
-        print('你当前的位置是：', po)
+        while 2 != 1:
+            while po in mmap:
+                point = input('请选择你要移动的方向或指令：')
+                if point == 'q' or point == 'i' or point == 'o':
+                    break
+                elif point not in point_code.keys():
+                    yidong = '向%s移动(%s键),'
+                    yd = ''
+                    for k, v in point_code.items():
+                        yd += yidong % (v, k)
+                    print('移动方式：', yd, '\n显示地图(i键),显示当前坐标值(o键),退出地图(q键)')
+                    continue
+                po = self.getpoint(point, random.randint(1, 3), po)
+            if point == 'i':
+                self.showmap(po)
+                self.intomap(po)
+            if point == 'o':
+                print('你当前的坐标值是：', po)
+            elif point == 'q':
+                print('退出地图')
+                break
+        return po
+
+    def showmap(self, po):
+        for y in map_y:
+            x = '#' * len(map_x)
+            if y == -po[1]:  # 因为根据循环，y轴打印从第一行开始，此时y轴是负数，但是在地图中坐标又是正数
+                x = ''
+                for xx in map_x:
+                    if xx == po[0]:
+                        x += '@'
+                        continue
+                    x += '#'
+            print(x, '\n')
+
 
 
 class main(welcome):
-    def main_start(self):
-        bp = buildplayer()
-        person = bp.create_player('s')
-        print('游戏正式开始！\n --------start---------')
-        po = (0, 0)
+    def main_menu(self):
         print('指令菜单:')
         for k, v in menu.items():
             print(k, '.', v)
-        active = input()
-        if not active or int(active) not in menu.keys():
-            active = 3
-        else:
-            active = int(active)
+
+    def main_start(self, active, po, pp):
         if menu.get(active) == '进入地图':
-            print('移动方式：向北移动(w键),向南移动(s键),向西移动(a键),向东移动(d键),退出地图(q键)')
+            yidong = '向%s移动(%s键),'
+            yd = ''
+            for k, v in point_code.items():
+                yd += yidong % (v, k)
+            print('移动方式：', yd, '\n显示地图(i键),显示当前坐标值(o键),退出地图(q键)')
             map1 = map()
-            map1.intomap(po)
+            po = map1.intomap(po)
         elif menu.get(active) == '显示状态':
             bn = build_nature()
-            bn.showuserinfo(person)
+            bn.showuserinfo(pp)
         elif menu.get(active) == '检查装备':
             pass
         elif menu.get(active) == '存档':
             pass
         elif menu.get(active) == '退出Lost':
             pass
-
+        return po
 
 game = main()
-game.main_start()
+active = 0
+bp = buildplayer()
+person = bp.create_player('s')
+print('冒险正式开始!')
+while int(active) != 5:
+    print('--------start---------')
+    game.main_menu()
+    active = input()
+    if not active:
+        game.main_menu()
+    po = game.main_start(int(active), po, person)
