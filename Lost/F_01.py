@@ -1,7 +1,7 @@
 '''
-Lost Beta 0.3
+Lost Beta 0.4
 作者：leonard
-时间：2017-11-08
+时间：2017-11-09
 创建角色
 初始化角色属性
 初始化地图
@@ -10,6 +10,8 @@ Lost Beta 0.3
 主程序
 优化地图指令
 打印地图及当前位置
+初始化姓名，使用姓名字典文件，并且按性别自动生成姓名
+人物优化
 '''
 import random
 
@@ -18,8 +20,16 @@ work_code = ('战士', '法师', '牧师', '盗贼')
 sex_code = ('男性', '女性', '无性')
 point_code = {'w': '北方死沼泽', 's': '南方幽暗林', 'a': '西方梦之丘', 'd': '东方昆仑墟'}
 menu = {1: '显示状态', 2: '检查装备', 3: '进入地图', 4: '存档', 5: '退出Lost'}
-person = {}
 po = (0, 0)
+_path = ''
+
+
+class person(object):
+    name = ''
+    race = 0
+    work = 0
+    sex = 0
+    nature = {}
 
 map_x = [i for i in range(-9, 10)]
 map_y = [j for j in range(-9, 10)]
@@ -29,17 +39,10 @@ for i in map_x:
     for j in map_y:
         mmap.append((i, j))
 
-
 class buildplayer():
     def player1(self):
-        player = {}
+        self.player = person()
         name = input('请输入你的角色的名字：')
-        if name:
-            pass
-        else:
-            name = '玩家' + str(random.randint(1, 9999))
-        player['名字'] = name
-        print('你的角色的名字是：', player['名字'])
         print('请选择你所属的种族：')
         i = 1
         for r in race_code:
@@ -51,7 +54,7 @@ class buildplayer():
                 pass
         else:
             race = random.randint(1, 4)
-        player['种族'] = race
+        self.player.race = race
         print('你选择的种族是：{}'.format(race_code[race - 1]))
         print('请选择你所属的职业：')
         i = 1
@@ -64,7 +67,7 @@ class buildplayer():
                 pass
         else:
             work = random.randint(1, 4)
-        player['职业'] = work
+        self.player.work = work
         print('你选择的职业是：{}'.format(work_code[work - 1]))
         print('请选择你的性别：')
         i = 1
@@ -76,15 +79,20 @@ class buildplayer():
             sex = random.randint(1, 3)
         else:
             pass
-        player['性别'] = sex
+        self.player.sex = sex
         print('你选择的性别是：{}'.format(sex_code[sex - 1]))
+        if name:
+            pass
+        else:
+            name = self.getName(sex)
+        self.player.name = name
         bn = build_nature()
-        player['属性'] = bn.nature(race=race, work=work, sex=sex)
-        print('{}，欢迎你进入到Lost世界，请小心，这里处处充满着危险！'.format(player['名字']))
-        return player
+        self.player.nature = bn.nature(race=race, work=work, sex=sex)
+        print('{}，欢迎你进入到Lost世界，请小心，这里处处充满着危险！'.format(self.player.name))
+        return self.player
 
     def create_player(self, s='s'):
-        person1 = {}
+        person1 = person()
         while s is 's':
             person1 = self.player1()
             bn = build_nature()
@@ -93,6 +101,29 @@ class buildplayer():
             self.create_player(s)
         return person1
 
+    def create_username(self, sex):
+        with open(_path + 'family_name.txt', 'r') as text:
+            self.family_name = text.read().split()
+        text.close
+        if sex == 1:
+            with open(_path + 'secound_name_2.txt', 'r') as text:
+                self.secound_name = text.read().split()
+            text.close
+        elif sex == 2:
+            with open(_path + 'secound_name.txt', 'r') as text:
+                self.secound_name = text.read().split()
+            text.close
+        elif sex == 3:
+            with open(_path + 'secound_name_3.txt', 'r') as text:
+                self.secound_name = text.read().split()
+            text.close
+
+    def getName(self, sex):
+        self.create_username(sex)
+        familyname = random.choice(self.family_name)
+        secountd = random.choice(self.secound_name)
+        all_name = "{}{}".format(familyname, secountd)
+        return all_name
 class welcome(object):
     def __init__(self):
         print('剑气分还合，荷珠碎复圆。万般皆是命，半点尽由天！')
@@ -175,11 +206,12 @@ class build_nature(object):
         return hcode
 
     def showuserinfo(self, pp):
-        print('你现在是{}的{}{},你当前的生命力为{},武力为{},法力为{},法力值为{},幸运值为{}'.format(race_code[pp['种族'] - 1], sex_code[pp['性别'] - 1],
-                                                                        work_code[pp['职业'] - 1], pp['属性']['hp'],
-                                                                        pp['属性']['atn'],
-                                                                        pp['属性']['it'], pp['属性']['mp'],
-                                                                        pp['属性']['kar']))
+        print('{},你现在是{}的{}{},你当前的生命力为{},武力为{},法力为{},法力值为{},幸运值为{}'.format(pp.name, race_code[pp.race - 1],
+                                                                           sex_code[pp.sex - 1],
+                                                                           work_code[pp.work - 1], pp.nature['hp'],
+                                                                           pp.nature['atn'],
+                                                                           pp.nature['it'], pp.nature['mp'],
+                                                                           pp.nature['kar']))
 
 class map(object):
     def getpoint(self, point, bushu, po):
@@ -247,7 +279,7 @@ class main(welcome):
             print(k, '.', v)
 
     def main_start(self, active, po, pp):
-        if menu.get(active) == '进入地图':
+        if menu.get(active, '请输入正确的菜单项') == '进入地图':
             yidong = '向%s移动(%s键),'
             yd = ''
             for k, v in point_code.items():
@@ -255,14 +287,14 @@ class main(welcome):
             print('移动方式：', yd, '\n显示地图(i键),显示当前坐标值(o键),退出地图(q键)')
             map1 = map()
             po = map1.intomap(po)
-        elif menu.get(active) == '显示状态':
+        elif menu.get(active, '请输入正确的菜单项') == '显示状态':
             bn = build_nature()
             bn.showuserinfo(pp)
-        elif menu.get(active) == '检查装备':
+        elif menu.get(active, '请输入正确的菜单项') == '检查装备':
             pass
-        elif menu.get(active) == '存档':
+        elif menu.get(active, '请输入正确的菜单项') == '存档':
             pass
-        elif menu.get(active) == '退出Lost':
+        elif menu.get(active, '请输入正确的菜单项') == '退出Lost':
             pass
         return po
 
