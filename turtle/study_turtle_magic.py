@@ -1,3 +1,4 @@
+import time
 import turtle as tl
 
 
@@ -34,7 +35,6 @@ def fbuild(time, le, jiaodu, x, y):
 
 
 t = tl.Pen()
-t.speed(0.3)
 t.color('red', 'yellow')
 x = 0
 y = 0
@@ -81,4 +81,5 @@ for i in range(0, 6):
 # fbuild(6,50,60,25,-43.3)
 # fbuild(6,200,60,100,-173.2)
 # t.hideturtle()
+time.sleep(0.3)
 tl.done()
