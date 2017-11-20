@@ -29,9 +29,23 @@ def generate_counter():
 
     return add_one
 
-
 counter = generate_counter()
 print(counter())
 print(counter())
 print(counter())
 print(counter())
+
+
+def abc():
+    i = 0
+
+    def add_one():
+        nonlocal i
+        i = i + 1
+        return i
+
+    return add_one
+
+
+coun = abc()
+print(coun(), coun(), coun(), coun())
