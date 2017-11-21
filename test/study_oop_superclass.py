@@ -11,7 +11,7 @@ class person(object):
 
 
 class falemale(person):
-    def face(self):
+    def face(self):  # 对父类的方法进行重载
         print('带眼镜', '大嘴巴')
 
 
