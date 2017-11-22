@@ -1,5 +1,5 @@
 '''
-学习__slots__
+学习__slots__,利用__slots__内置函数限制动态语言里实例的动态属性添加
 '''
 from types import MethodType
 
