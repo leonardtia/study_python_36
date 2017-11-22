@@ -21,21 +21,18 @@ class Mylist(object):
         for i in range(0, len(self.__mylist)):
             self.__mylist[i] = self.__mylist[i] / x
 
-    def show(self):
-        print(self.__mylist)
+    def get_mylist(self):
+        return self.__mylist
 
 
 l = Mylist(1, 2, 3, 4, 5)
-l.show()
+print(l.get_mylist())
 
 a = l + 20
-l.show()
+print(l.get_mylist())
 
 l - 10
-l.show()
+print(l.get_mylist())
 
 l * 3
-l.show()
-
-l / 3
-l.show()
+print(l.get_mylist())
