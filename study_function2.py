@@ -24,5 +24,5 @@ def censored_text_create(n,msg1):
     text_create(name=n,msg=msg2)
     text_read(n)
 w = 'my name is tian yuan!'
-n = 'test'
+n = 'my_study'
 censored_text_create(n,w)
