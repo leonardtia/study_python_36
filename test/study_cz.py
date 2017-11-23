@@ -5,6 +5,11 @@ class Mylist(object):
         for arg in args:
             self.__mylist.append(arg)
 
+    def __str__(self):
+        return str(self.__mylist)
+
+    __repr__ = __str__
+
     def __add__(self, x):
         for i in range(0, len(self.__mylist)):
             self.__mylist[i] += x
@@ -25,14 +30,11 @@ class Mylist(object):
         return self.__mylist
 
 
-l = Mylist(1, 2, 3, 4, 5)
-print(l.get_mylist())
-
-a = l + 20
-print(l.get_mylist())
-
-l - 10
-print(l.get_mylist())
-
-l * 3
-print(l.get_mylist())
+if __name__ == '__main__':
+    l = Mylist(1, 2, 3, 4, 5)
+    a = l + 20
+    print(l)
+    l - 10
+    print(l)
+    l * 3
+    print(l)
