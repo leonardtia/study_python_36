@@ -38,3 +38,22 @@ def abc():
 
 coun = abc()
 print(coun(), coun(), coun(), coun())
+
+
+def createcounter02():
+    def _odd_iter():
+        n = 0
+        while True:
+            n = n + 1
+            yield n
+
+    y = _odd_iter()
+
+    def counter():
+        return next(y)
+
+    return counter
+
+
+coo = createcounter02()
+print(coo(), coo(), coo())
